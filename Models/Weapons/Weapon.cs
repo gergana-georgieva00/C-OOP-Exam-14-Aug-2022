@@ -17,7 +17,7 @@ namespace PlanetWars.Models.Weapons
 
         public abstract double Price { get; set; }
 
-        public int DestructionLevel 
+        public virtual int DestructionLevel 
         {
             get { return this.destructionLevel; }
             set
