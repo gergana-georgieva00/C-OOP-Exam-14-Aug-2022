@@ -17,7 +17,7 @@ namespace PlanetWars.Repositories
             weapons = new List<IWeapon>();
         }
 
-        public IReadOnlyCollection<IWeapon> Models { get; }
+        public IReadOnlyCollection<IWeapon> Models => this.weapons.AsReadOnly();
 
         public void AddItem(IWeapon weapon)
         {
@@ -34,9 +34,15 @@ namespace PlanetWars.Repositories
             return null;
         }
 
-        public bool RemoveItem(string name)
+        public bool RemoveItem(string weaponTypeName)
         {
-            throw new NotImplementedException();
+            if (this.weapons.Any(w => w.GetType().Name == weaponTypeName))
+            {
+                this.weapons = this.weapons.Where(w => w.GetType().Name != weaponTypeName).ToList();
+                return true;
+            }
+
+            return false;
         }
     }
 }
