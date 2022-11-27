@@ -19,9 +19,9 @@ namespace PlanetWars.Repositories
 
         public IReadOnlyCollection<IWeapon> Models { get; }
 
-        public void AddItem(IWeapon model)
+        public void AddItem(IWeapon weapon)
         {
-            throw new NotImplementedException();
+            this.weapons.Add(weapon);
         }
 
         public IWeapon FindByName(string weaponType)
