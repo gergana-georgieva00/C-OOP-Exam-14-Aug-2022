@@ -2,6 +2,7 @@
 using PlanetWars.Repositories.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace PlanetWars.Repositories
@@ -17,7 +18,7 @@ namespace PlanetWars.Repositories
 
         public IReadOnlyCollection<IPlanet> Models => this.planets.AsReadOnly();
 
-        public void AddItem(IPlanet model)
+        public void AddItem(IPlanet planet)
         {
             this.planets.Add(planet);
         }
@@ -27,9 +28,15 @@ namespace PlanetWars.Repositories
             return this.planets.Find(p => p.Name == name);
         }
 
-        public bool RemoveItem(string name)
+        public bool RemoveItem(string planetName)
         {
-            throw new NotImplementedException();
+            if (this.planets.Any(p => p.Name == planetName))
+            {
+                this.planets = this.planets.Where(p => p.Name != planetName).ToList();
+                return true;
+            }
+
+            return false;
         }
     }
 }
