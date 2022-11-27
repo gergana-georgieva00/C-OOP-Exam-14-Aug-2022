@@ -38,7 +38,9 @@ namespace PlanetWars.Models.Planets
 
         private double CalculateMilitaryPower()
         {
-            throw new NotImplementedException();
+            double totalAmount = 0;
+
+            return totalAmount;
         }
 
         public IReadOnlyCollection<IMilitaryUnit> Army { get; }
