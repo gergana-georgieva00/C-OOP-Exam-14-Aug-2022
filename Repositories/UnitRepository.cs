@@ -2,6 +2,7 @@
 using PlanetWars.Repositories.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace PlanetWars.Repositories
@@ -27,9 +28,15 @@ namespace PlanetWars.Repositories
             return this.models.Find(u => u.GetType().Name == inputTypeName);
         }
 
-        public bool RemoveItem(string name)
+        public bool RemoveItem(string inputTypeName)
         {
-            throw new NotImplementedException();
+            if (this.models.Any(m => m.GetType().Name == inputTypeName))
+            {
+                this.models = this.models.Where(m => m.GetType().Name != inputTypeName).ToList();
+                return true;
+            }
+
+            return false;
         }
     }
 }
