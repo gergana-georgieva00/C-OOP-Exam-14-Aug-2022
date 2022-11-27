@@ -9,7 +9,5 @@ namespace PlanetWars.Models.Weapons
         public NuclearWeapon(int destructionLevel) : base(15, destructionLevel)
         {
         }
-
-        public override double Price { get; set; }
     }
 }

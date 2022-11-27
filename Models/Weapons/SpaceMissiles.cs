@@ -9,7 +9,5 @@ namespace PlanetWars.Models.Weapons
         public SpaceMissiles(int destructionLevel) : base(8.75, destructionLevel)
         {
         }
-
-        public override double Price { get; set; }
     }
 }
