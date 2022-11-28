@@ -116,7 +116,7 @@ namespace PlanetWars.Models.Planets
 
             sb.AppendLine($"--Military Power: {this.MilitaryPower}");
 
-            return sb.ToString();
+            return sb.ToString().Trim();
         }
 
         public void Profit(double amount)
