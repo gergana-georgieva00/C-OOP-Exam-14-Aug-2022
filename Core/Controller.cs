@@ -2,6 +2,7 @@
 using PlanetWars.Models.MilitaryUnits;
 using PlanetWars.Models.MilitaryUnits.Contracts;
 using PlanetWars.Models.Planets;
+using PlanetWars.Models.Planets.Contracts;
 using PlanetWars.Models.Weapons.Contracts;
 using PlanetWars.Repositories;
 using System;
@@ -87,7 +88,28 @@ namespace PlanetWars.Core
 
         public string SpaceCombat(string planetOne, string planetTwo)
         {
-            throw new NotImplementedException();
+            var planet1 = this.planets.FindByName(planetOne);
+            var planet2 = this.planets.FindByName(planetTwo);
+
+            var winner = planet1;
+            var loser = planet2;
+
+            if (planet1.MilitaryPower > planet2.MilitaryPower)
+            {
+                winner = planet1;
+                loser = planet2;
+            }
+            else if (planet1.MilitaryPower < planet2.MilitaryPower)
+            {
+                winner = planet2;
+                loser = planet1;
+            }
+            else
+            {
+
+            }
+
+            return $"{winner.Name} destructed {loser.Name}!";
         }
 
         public string SpecializeForces(string planetName)
