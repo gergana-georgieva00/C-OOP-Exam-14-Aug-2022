@@ -3,6 +3,7 @@ using PlanetWars.Models.MilitaryUnits;
 using PlanetWars.Models.MilitaryUnits.Contracts;
 using PlanetWars.Models.Planets;
 using PlanetWars.Models.Planets.Contracts;
+using PlanetWars.Models.Weapons;
 using PlanetWars.Models.Weapons.Contracts;
 using PlanetWars.Repositories;
 using System;
@@ -53,21 +54,20 @@ namespace PlanetWars.Core
                 throw new InvalidOperationException($"Planet {planetName} does not exist!");
             }
 
-            var type = Type.GetType($"PlanetWars.Models.MilitaryUnits.{weaponTypeName}");
+            var type = Type.GetType($"PlanetWars.Models.Weapons.{weaponTypeName}");
 
             if (type == null)
             {
                 throw new InvalidOperationException($"{weaponTypeName} still not available!");
             }
-
-            var weapon = Activator.CreateInstance(type);
-
             if (planets.FindByName(planetName).Weapons.Any(m => m.GetType().Name == weaponTypeName))
             {
                 throw new InvalidOperationException($"{weaponTypeName} already added to the Weapons of {planetName}!");
             }
 
+            var weapon = (Weapon)Activator.CreateInstance(type, destructionLevel);
             var planet = planets.FindByName(planetName);
+            planet.Spend(weapon.Price);
             planet.AddWeapon((IWeapon)weapon);
 
             return $"{planetName} purchased {weaponTypeName}!";

@@ -95,7 +95,7 @@ namespace PlanetWars.Models.Planets
 
             if (unitNames.Count == 0)
             {
-                sb.AppendLine("No units");
+                sb.AppendLine($"--Forces: No units");
             }
             else
             {
@@ -110,7 +110,7 @@ namespace PlanetWars.Models.Planets
 
             if (weaponNames.Count == 0)
             {
-                sb.AppendLine("No weapons");
+                sb.AppendLine("--Combat equipment: No weapons");
             }
             else
             {
