@@ -1,5 +1,6 @@
 ﻿using PlanetWars.Core.Contracts;
 using PlanetWars.Models.MilitaryUnits;
+using PlanetWars.Models.MilitaryUnits.Contracts;
 using PlanetWars.Models.Planets;
 using PlanetWars.Repositories;
 using System;
@@ -31,12 +32,15 @@ namespace PlanetWars.Core
             {
                 throw new InvalidOperationException($"{unitTypeName} still not available!");
             }
-            if ()
+            if (planets.FindByName(planetName).Army.Any(m => m.GetType().Name == unitTypeName))
             {
-
+                throw new InvalidOperationException($"{unitTypeName} already added to the Army of {planetName}!");
             }
 
-            return null;
+            var planet = planets.FindByName(planetName);
+            planet.AddUnit((IMilitaryUnit)militaryUnit);
+
+            return $"{unitTypeName} added successfully to the Army of {planetName}!";
         }
 
         public string AddWeapon(string planetName, string weaponTypeName, int destructionLevel)
