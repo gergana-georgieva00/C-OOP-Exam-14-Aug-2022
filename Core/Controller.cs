@@ -1,4 +1,5 @@
 ﻿using PlanetWars.Core.Contracts;
+using PlanetWars.Models.MilitaryUnits;
 using PlanetWars.Models.Planets;
 using PlanetWars.Repositories;
 using System;
@@ -19,7 +20,23 @@ namespace PlanetWars.Core
 
         public string AddUnit(string unitTypeName, string planetName)
         {
-            throw new NotImplementedException();
+            var type = Type.GetType(unitTypeName);
+            var militaryUnit = Activator.CreateInstance(type);
+
+            if (!this.planets.Models.Any(p => p.Name == planetName))
+            {
+                throw new InvalidOperationException($"Planet {planetName} does not exist!");
+            }
+            if (militaryUnit == null)
+            {
+                throw new InvalidOperationException($"{unitTypeName} still not available!");
+            }
+            if ()
+            {
+
+            }
+
+            return null;
         }
 
         public string AddWeapon(string planetName, string weaponTypeName, int destructionLevel)

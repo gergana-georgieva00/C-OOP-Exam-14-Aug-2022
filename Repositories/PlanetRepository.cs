@@ -18,8 +18,6 @@ namespace PlanetWars.Repositories
 
         public IReadOnlyCollection<IPlanet> Models => this.planets.AsReadOnly();
 
-        public bool Any { get; internal set; }
-
         public void AddItem(IPlanet planet)
         {
             this.planets.Add(planet);
