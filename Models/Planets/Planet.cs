@@ -34,7 +34,7 @@ namespace PlanetWars.Models.Planets
 
         public string Name { get; }
 
-        public double Budget { get; }
+        public double Budget { get; private set; }
 
         public double MilitaryPower => Math.Round(this.CalculateMilitaryPower(), 3);
 
@@ -84,12 +84,17 @@ namespace PlanetWars.Models.Planets
 
         public void Profit(double amount)
         {
-            throw new NotImplementedException();
+            this.Budget += amount;
         }
 
         public void Spend(double amount)
         {
-            throw new NotImplementedException();
+            if (this.Budget < amount)
+            {
+                throw new InvalidOperationException("Budget too low!");
+            }
+
+            this.Budget -= amount;
         }
 
         public void TrainArmy()
