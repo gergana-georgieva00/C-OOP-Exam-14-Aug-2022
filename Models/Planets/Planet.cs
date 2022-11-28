@@ -69,12 +69,12 @@ namespace PlanetWars.Models.Planets
 
         public void AddUnit(IMilitaryUnit unit)
         {
-            throw new NotImplementedException();
+            this.units.AddItem(unit);
         }
 
         public void AddWeapon(IWeapon weapon)
         {
-            throw new NotImplementedException();
+            this.weapons.AddItem(weapon);
         }
 
         public string PlanetInfo()
