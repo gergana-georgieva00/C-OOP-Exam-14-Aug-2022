@@ -83,7 +83,15 @@ namespace PlanetWars.Core
 
         public string ForcesReport()
         {
-            throw new NotImplementedException();
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine("***UNIVERSE PLANET MILITARY REPORT***");
+            foreach (var planet in this.planets.Models)
+            {
+                sb.AppendLine(planet.PlanetInfo());
+            }
+
+            return sb.ToString().Trim();
         }
 
         public string SpaceCombat(string planetOne, string planetTwo)
@@ -140,6 +148,8 @@ namespace PlanetWars.Core
             {
                 winner.Profit(unit.Cost);
             }
+
+            planets.RemoveItem(loser.Name);
 
             return $"{winner.Name} destructed {loser.Name}!";
         }
