@@ -65,7 +65,7 @@ namespace PlanetWars.Core
             var planet = planets.FindByName(planetName);
             planet.AddWeapon((IWeapon)weapon);
 
-            return null;
+            return $"{planetName} purchased {weaponTypeName}!";
         }
 
         public string CreatePlanet(string name, double budget)
@@ -92,7 +92,20 @@ namespace PlanetWars.Core
 
         public string SpecializeForces(string planetName)
         {
-            throw new NotImplementedException();
+            if (!this.planets.Models.Any(p => p.Name == planetName))
+            {
+                throw new InvalidOperationException($"Planet {planetName} does not exist!");
+            }
+            if (this.planets.Models.Any(p => p.Army.Count != 0))
+            {
+                throw new InvalidOperationException("No units available for upgrade!");
+            }
+
+            var planet = this.planets.FindByName(planetName);
+            planet.TrainArmy();
+            planet.Spend(1.25);
+
+            return $"{planetName} has upgraded its forces!";
         }
     }
 }
