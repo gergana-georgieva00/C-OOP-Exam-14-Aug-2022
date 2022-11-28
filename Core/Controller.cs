@@ -23,14 +23,14 @@ namespace PlanetWars.Core
 
         public string AddUnit(string unitTypeName, string planetName)
         {
-            var type = Type.GetType(unitTypeName);
-            var militaryUnit = Activator.CreateInstance(type);
-
             if (!this.planets.Models.Any(p => p.Name == planetName))
             {
                 throw new InvalidOperationException($"Planet {planetName} does not exist!");
             }
-            if (militaryUnit == null)
+
+            var type = Type.GetType($"PlanetWars.Models.MilitaryUnits.{unitTypeName}");
+
+            if (type == null)
             {
                 throw new InvalidOperationException($"{unitTypeName} still not available!");
             }
@@ -39,6 +39,7 @@ namespace PlanetWars.Core
                 throw new InvalidOperationException($"{unitTypeName} already added to the Army of {planetName}!");
             }
 
+            var militaryUnit = Activator.CreateInstance(type);
             var planet = planets.FindByName(planetName);
             planet.AddUnit((IMilitaryUnit)militaryUnit);
 
@@ -47,17 +48,20 @@ namespace PlanetWars.Core
 
         public string AddWeapon(string planetName, string weaponTypeName, int destructionLevel)
         {
-            var type = Type.GetType(weaponTypeName);
-            var weapon = Activator.CreateInstance(type);
-
             if (!this.planets.Models.Any(p => p.Name == planetName))
             {
                 throw new InvalidOperationException($"Planet {planetName} does not exist!");
             }
-            if (weapon == null)
+
+            var type = Type.GetType($"PlanetWars.Models.MilitaryUnits.{weaponTypeName}");
+
+            if (type == null)
             {
                 throw new InvalidOperationException($"{weaponTypeName} still not available!");
             }
+
+            var weapon = Activator.CreateInstance(type);
+
             if (planets.FindByName(planetName).Weapons.Any(m => m.GetType().Name == weaponTypeName))
             {
                 throw new InvalidOperationException($"{weaponTypeName} already added to the Weapons of {planetName}!");
