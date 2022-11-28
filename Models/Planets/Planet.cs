@@ -79,7 +79,44 @@ namespace PlanetWars.Models.Planets
 
         public string PlanetInfo()
         {
-            throw new NotImplementedException();
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine($"Planet: {this.Name}");
+            sb.AppendLine($"--Budget: {this.Budget} billion QUID");
+
+            List<string> unitNames = new List<string>();
+            foreach (var unit in this.units.Models)
+            {
+                unitNames.Add(unit.GetType().Name);
+            }
+
+            if (unitNames.Count == 0)
+            {
+                sb.AppendLine("No units");
+            }
+            else
+            {
+                sb.AppendLine($"--Forces: {string.Join(", ", unitNames)}");
+            }
+
+            List<string> weaponNames = new List<string>();
+            foreach (var weapon in this.weapons.Models)
+            {
+                weaponNames.Add(weapon.GetType().Name);
+            }
+
+            if (weaponNames.Count == 0)
+            {
+                sb.AppendLine("No weapons");
+            }
+            else
+            {
+                sb.AppendLine($"--Combat equipment: {string.Join(", ", weaponNames)}");
+            }
+
+            sb.AppendLine($"--Military Power: {this.MilitaryPower}");
+
+            return sb.ToString();
         }
 
         public void Profit(double amount)
