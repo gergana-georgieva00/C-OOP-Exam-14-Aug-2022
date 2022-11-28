@@ -7,24 +7,31 @@ namespace PlanetWars.Models.Weapons
 {
     public abstract class Weapon : IWeapon 
     {
+        private int destructionLevel;
         public Weapon(double price, int destructionLevel)
         {
             this.Price = price;
-
-            if (destructionLevel < 1)
-            {
-                throw new ArgumentException("Destruction level cannot be zero or negative.");
-            }
-            else if (destructionLevel > 10)
-            {
-                throw new ArgumentException("Destruction level cannot exceed 10 power points.");
-            }
-
             this.DestructionLevel = destructionLevel;
         }
 
         public double Price { get; }
 
-        public virtual int DestructionLevel { get; }
+        public virtual int DestructionLevel
+        {
+            get => this.destructionLevel;
+            private set
+            {
+                if (value < 1)
+                {
+                    throw new ArgumentException("Destruction level cannot be zero or negative.");
+                }
+                else if (value > 10)
+                {
+                    throw new ArgumentException("Destruction level cannot exceed 10 power points.");
+                }
+
+                this.destructionLevel = value;
+            }
+        }
     }
 }
