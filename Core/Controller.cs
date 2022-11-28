@@ -40,8 +40,9 @@ namespace PlanetWars.Core
                 throw new InvalidOperationException($"{unitTypeName} already added to the Army of {planetName}!");
             }
 
-            var militaryUnit = Activator.CreateInstance(type);
+            var militaryUnit = (MilitaryUnit)Activator.CreateInstance(type);
             var planet = planets.FindByName(planetName);
+            planet.Spend(militaryUnit.Cost);
             planet.AddUnit((IMilitaryUnit)militaryUnit);
 
             return $"{unitTypeName} added successfully to the Army of {planetName}!";
@@ -65,7 +66,16 @@ namespace PlanetWars.Core
                 throw new InvalidOperationException($"{weaponTypeName} already added to the Weapons of {planetName}!");
             }
 
-            var weapon = (Weapon)Activator.CreateInstance(type, destructionLevel);
+            Weapon weapon;
+            try
+            {
+                weapon = (Weapon)Activator.CreateInstance(type, destructionLevel);
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException(ex.InnerException.Message);
+            }
+            
             var planet = planets.FindByName(planetName);
             planet.Spend(weapon.Price);
             planet.AddWeapon((IWeapon)weapon);
@@ -164,7 +174,7 @@ namespace PlanetWars.Core
             {
                 throw new InvalidOperationException($"Planet {planetName} does not exist!");
             }
-            if (this.planets.Models.Any(p => p.Army.Count != 0))
+            if (!this.planets.Models.Any(p => p.Army.Count > 0))
             {
                 throw new InvalidOperationException("No units available for upgrade!");
             }
