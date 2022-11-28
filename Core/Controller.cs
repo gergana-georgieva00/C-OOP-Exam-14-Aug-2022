@@ -1,4 +1,5 @@
 ﻿using PlanetWars.Core.Contracts;
+using PlanetWars.Models.Planets;
 using PlanetWars.Repositories;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,8 @@ namespace PlanetWars.Core
                 return $"Planet {name} is already added!";
             }
 
+            var newPlanet = new Planet(name, budget);
+            planets.AddItem(newPlanet);
             return $"Successfully added Planet: {name}";
         }
 
