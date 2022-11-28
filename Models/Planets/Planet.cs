@@ -94,7 +94,10 @@ namespace PlanetWars.Models.Planets
 
         public void TrainArmy()
         {
-            throw new NotImplementedException();
+            foreach (var unit in units.Models)
+            {
+                unit.IncreaseEndurance();
+            }
         }
     }
 }
