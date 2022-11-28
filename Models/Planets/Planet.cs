@@ -63,9 +63,9 @@ namespace PlanetWars.Models.Planets
             return totalAmount;
         }
 
-        public IReadOnlyCollection<IMilitaryUnit> Army { get; }
+        public IReadOnlyCollection<IMilitaryUnit> Army => units.Models;
 
-        public IReadOnlyCollection<IWeapon> Weapons { get; }
+        public IReadOnlyCollection<IWeapon> Weapons => weapons.Models;
 
         public void AddUnit(IMilitaryUnit unit)
         {
