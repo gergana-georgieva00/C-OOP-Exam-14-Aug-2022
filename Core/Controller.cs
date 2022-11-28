@@ -86,7 +86,7 @@ namespace PlanetWars.Core
             StringBuilder sb = new StringBuilder();
 
             sb.AppendLine("***UNIVERSE PLANET MILITARY REPORT***");
-            foreach (var planet in this.planets.Models)
+            foreach (var planet in this.planets.Models.OrderByDescending(p => p.MilitaryPower).ThenBy(p => p.Name))
             {
                 sb.AppendLine(planet.PlanetInfo());
             }
