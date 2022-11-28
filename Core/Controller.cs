@@ -106,7 +106,39 @@ namespace PlanetWars.Core
             }
             else
             {
+                if (planet1.Weapons.Any(w => w.GetType().Name == "Nuclear weapon") && planet2.Weapons.Any(w => w.GetType().Name == "Nuclear weapon"))
+                {
+                    planet1.Spend(planet1.Budget / 2);
+                    planet2.Spend(planet2.Budget / 2);
+                    return "The only winners from the war are the ones who supply the bullets and the bandages!";
+                }
+                else if (planet1.Weapons.Any(w => w.GetType().Name == "Nuclear weapon"))
+                {
+                    winner = planet1;
+                }
+                else if (planet2.Weapons.Any(w => w.GetType().Name == "Nuclear weapon"))
+                {
+                    winner = planet2;
+                }
+                else
+                {
+                    planet1.Spend(planet1.Budget / 2);
+                    planet2.Spend(planet2.Budget / 2);
+                    return "The only winners from the war are the ones who supply the bullets and the bandages!";
+                }
+            }
 
+            winner.Spend(winner.Budget / 2);
+            winner.Profit(loser.Budget / 2);
+            loser.Spend(loser.Budget / 2);
+
+            foreach (var weapon in loser.Weapons)
+            {
+                winner.Profit(weapon.Price);
+            }
+            foreach (var unit in loser.Army)
+            {
+                winner.Profit(unit.Cost);
             }
 
             return $"{winner.Name} destructed {loser.Name}!";
