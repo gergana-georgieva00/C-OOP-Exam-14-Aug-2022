@@ -45,7 +45,26 @@ namespace PlanetWars.Core
 
         public string AddWeapon(string planetName, string weaponTypeName, int destructionLevel)
         {
-            throw new NotImplementedException();
+            var type = Type.GetType(weaponTypeName);
+            var militaryUnit = Activator.CreateInstance(type);
+
+            if (!this.planets.Models.Any(p => p.Name == planetName))
+            {
+                throw new InvalidOperationException($"Planet {planetName} does not exist!");
+            }
+            if (militaryUnit == null)
+            {
+                throw new InvalidOperationException($"{weaponTypeName} still not available!");
+            }
+            if (planets.FindByName(planetName).Army.Any(m => m.GetType().Name == weaponTypeName))
+            {
+                throw new InvalidOperationException($"{weaponTypeName} already added to the Army of {planetName}!");
+            }
+
+            var planet = planets.FindByName(planetName);
+            planet.AddUnit((IMilitaryUnit)militaryUnit);
+
+            return null;
         }
 
         public string CreatePlanet(string name, double budget)

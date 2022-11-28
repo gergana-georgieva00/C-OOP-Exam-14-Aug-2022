@@ -16,6 +16,9 @@ namespace PlanetWars.Models.Planets
 
         public Planet(string name, double budget)
         {
+            this.units = new UnitRepository();
+            this.weapons = new WeaponRepository();
+
             if (string.IsNullOrWhiteSpace(name))
             {
                 throw new ArgumentException("Planet name cannot be null or empty.");
